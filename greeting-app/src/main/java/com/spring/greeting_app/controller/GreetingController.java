@@ -5,6 +5,7 @@ import com.spring.greeting_app.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -71,5 +72,11 @@ public class GreetingController {
         Optional<Greeting> greeting = greetingService.findGreetingById(id);
         return greeting.map(g -> createResponse(g.getMessage()))
                 .orElseGet(() -> createResponse("Greeting not found!"));
+    }
+
+    // UC6: GET Request - List All Greeting Messages
+    @GetMapping("/all")
+    public ResponseEntity<List<Greeting>> getAllGreetings() {
+        return ResponseEntity.ok(greetingService.getAllGreetings());
     }
 }
