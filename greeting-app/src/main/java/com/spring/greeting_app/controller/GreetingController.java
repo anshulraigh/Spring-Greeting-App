@@ -1,5 +1,6 @@
 package com.spring.greeting_app.controller;
 
+import com.spring.greeting_app.model.Greeting;
 import com.spring.greeting_app.service.GreetingService;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
@@ -54,5 +55,12 @@ public class GreetingController {
     @DeleteMapping
     public ResponseEntity<Map<String, String>> deleteGreeting() {
         return createResponse("Greeting deleted via DELETE request!");
+    }
+
+    // UC4: POST Request - Save Greeting Message
+    @PostMapping("/save")
+    public ResponseEntity<Map<String, String>> saveGreeting(@RequestParam String message) {
+        Greeting savedGreeting = greetingService.saveGreeting(message);
+        return createResponse("Greeting saved with ID: " + savedGreeting.getId());
     }
 }
