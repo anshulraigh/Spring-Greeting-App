@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.http.ResponseEntity;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/greeting")
@@ -62,5 +63,13 @@ public class GreetingController {
     public ResponseEntity<Map<String, String>> saveGreeting(@RequestParam String message) {
         Greeting savedGreeting = greetingService.saveGreeting(message);
         return createResponse("Greeting saved with ID: " + savedGreeting.getId());
+    }
+
+    // UC5: GET Request - Find Greeting by ID
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, String>> getGreetingById(@PathVariable Long id) {
+        Optional<Greeting> greeting = greetingService.findGreetingById(id);
+        return greeting.map(g -> createResponse(g.getMessage()))
+                .orElseGet(() -> createResponse("Greeting not found!"));
     }
 }

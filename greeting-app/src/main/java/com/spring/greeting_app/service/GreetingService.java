@@ -4,6 +4,8 @@ import com.spring.greeting_app.model.Greeting;
 import com.spring.greeting_app.repository.GreetingRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service  // Marks this class as a Service component
 public class GreetingService {
 
@@ -31,5 +33,10 @@ public class GreetingService {
     public Greeting saveGreeting(String message) {
         Greeting greeting = new Greeting(message);
         return greetingRepository.save(greeting);
+    }
+
+    // Find a greeting message by ID (UC5)
+    public Optional<Greeting> findGreetingById(Long id) {
+        return greetingRepository.findById(id);
     }
 }
