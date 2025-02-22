@@ -24,10 +24,18 @@ public class GreetingController {
         return ResponseEntity.ok(response);
     }
 
-    // UC2: GET Request - Get Greeting from Service Layer
+    // UC3: GET Request - Personalized Greeting
+    @GetMapping("/personalized")
+    public ResponseEntity<Map<String, String>> getPersonalizedGreeting(
+            @RequestParam(required = false) String firstName,
+            @RequestParam(required = false) String lastName) {
+        return createResponse(greetingService.getPersonalizedGreeting(firstName, lastName));
+    }
+
+    // UC2: GET Request - Default Greeting
     @GetMapping
     public ResponseEntity<Map<String, String>> getGreeting() {
-        return createResponse(greetingService.getGreetingMessage());
+        return createResponse(greetingService.getPersonalizedGreeting(null, null));
     }
 
     // UC1: POST Request - Greeting
